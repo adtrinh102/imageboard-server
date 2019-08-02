@@ -8,4 +8,14 @@ router.get('/image', (req, res, next) => {
         .catch(next)
 })
 
+router.post('/image', (req, res, next) => {
+    if (!req.body.url || !req.body.title) {
+        res.status(403).end()
+        res.send("You should put in the url and title")
+    }
+    Image.create(req.body)
+        .then(image => res.json(image))
+        .catch(next)
+})
+
 module.exports = router 
