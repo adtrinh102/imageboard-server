@@ -18,4 +18,25 @@ router.post('/image', (req, res, next) => {
         .catch(next)
 })
 
+router.put('/image/:id', (req, res, next) => {
+    Image.findByPk(req.params.id)
+        .then(image => image.update(req.body))
+        .then(image => res.json(image))
+        .catch(next)
+})
+
+router.delete('/image/:id', (req, res, next) => {
+    Image.destroy({ where: { id: req.params.id } })
+        .then(numDeleted => {
+            if (numDeleted) {
+                res.status(204).end()
+                res.send(numDeleted)
+            }
+            else {
+                return res.status(404).end()
+            }
+        })
+        .catch(next)
+})
+
 module.exports = router 
