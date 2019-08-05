@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const Image = require('./model')
+const auth = require('../auth/middleware')
 const router = new Router()
 
 router.get('/image', (req, res, next) => {
@@ -8,11 +9,12 @@ router.get('/image', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/image', (req, res, next) => {
+router.post('/image', auth, (req, res, next) => {
     if (!req.body.url || !req.body.title) {
         res.status(403).end()
-        res.send("You should put in the url and title")
+        res.send("Url and title are required")
     }
+
     Image.create(req.body)
         .then(image => res.json(image))
         .catch(next)
@@ -29,8 +31,7 @@ router.delete('/image/:id', (req, res, next) => {
     Image.destroy({ where: { id: req.params.id } })
         .then(numDeleted => {
             if (numDeleted) {
-                res.status(204).end()
-                res.send(numDeleted)
+                return res.status(204).end()
             }
             else {
                 return res.status(404).end()

@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const bcrypt = require('bcrypt')
-const { toJWT, toData } = require('./jwt')
+const { toJWT } = require('./jwt')
 const User = require('../User/model')
 const auth = require('./middleware')
 
@@ -23,7 +23,7 @@ router.post('/login', (req, res) => {
             })
             .then(entity => {
                 if (!entity) {
-                    res.status(400).send({
+                    return res.status(400).send({
                         message: 'User with that email does not exist'
                     })
                 }
@@ -55,11 +55,9 @@ router.post('/login', (req, res) => {
     }
 })
 
-router.get('/secret-endpoint', (req, res) => {
-    router.get('/secret-endpoint', auth, (req, res) => {
-        res.send({
-            message: `Thanks for visiting the secret endpoint ${req.user.email}.`,
-        })
+router.get('/secret-endpoint', auth, (req, res) => {
+    res.send({
+        message: `Thanks for visiting the secret endpoint ${req.user.email}.`,
     })
 })
 

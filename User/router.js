@@ -31,8 +31,7 @@ router.delete('/user/:id', (req, res, next) => {
     User.destroy({ where: { id: req.params.id } })
         .then(numDeleted => {
             if (numDeleted) {
-                res.status(204).end()
-                res.send(numDeleted)
+                return res.status(204).end()
             }
             else {
                 return res.status(404).end()
