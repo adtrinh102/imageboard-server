@@ -20,6 +20,13 @@ router.get('/user', (req, res, next) => {
         .catch(next)
 })
 
+router.get('/user/:id/', (req, res, next) => {
+    User
+        .findByPk(req.params.id)
+        .then(user => res.json(user))
+        .catch(next)
+})
+
 router.put('/user/:id', (req, res, next) => {
     User.findByPk(req.params.id)
         .then(user => user.update(req.body))

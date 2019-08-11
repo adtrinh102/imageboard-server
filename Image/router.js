@@ -9,6 +9,13 @@ router.get('/image', (req, res, next) => {
         .catch(next)
 })
 
+router.get('/image/:id/', (req, res, next) => {
+    Image
+        .findByPk(req.params.id)
+        .then(image => res.json(image))
+        .catch(next)
+})
+
 router.post('/image', auth, (req, res, next) => {
     if (!req.body.url || !req.body.title) {
         res.status(403).end()

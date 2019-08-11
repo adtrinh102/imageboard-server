@@ -48,10 +48,6 @@ router.post('/login', (req, res) => {
                     message: 'Something went wrong'
                 })
             })
-
-        // res.send({
-        //     jwt: toJWT({ userId: 1 })
-        // })
     }
 })
 
