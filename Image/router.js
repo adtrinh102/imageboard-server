@@ -27,14 +27,14 @@ router.post('/image', auth, (req, res, next) => {
         .catch(next)
 })
 
-router.put('/image/:id', (req, res, next) => {
+router.put('/image/:id', auth, (req, res, next) => {
     Image.findByPk(req.params.id)
         .then(image => image.update(req.body))
         .then(image => res.json(image))
         .catch(next)
 })
 
-router.delete('/image/:id', (req, res, next) => {
+router.delete('/image/:id', auth, (req, res, next) => {
     Image.destroy({ where: { id: req.params.id } })
         .then(numDeleted => {
             if (numDeleted) {

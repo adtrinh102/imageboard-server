@@ -9,7 +9,7 @@ const router = new Router()
 router.post('/login', (req, res) => {
     if (!req.body.email || !req.body.password) {
         res.status(400).send({
-            message: 'Please supply a valid email and password'
+            message: 'Please provide a valid email and password'
         })
     }
 
@@ -49,12 +49,6 @@ router.post('/login', (req, res) => {
                 })
             })
     }
-})
-
-router.get('/secret-endpoint', auth, (req, res) => {
-    res.send({
-        message: `Thanks for visiting the secret endpoint ${req.user.email}.`,
-    })
 })
 
 module.exports = router
